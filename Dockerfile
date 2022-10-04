@@ -36,7 +36,7 @@ WORKDIR server
 COPY --from=builder /client /client
 
 # Install Minecraft Server
-RUN curl "https://piston-data.mojang.com/v1/objects/f69c284232d7c7580bd89a5a4931c3581eae1378/server.jar" --output server.jar
+ADD https://piston-data.mojang.com/v1/objects/f69c284232d7c7580bd89a5a4931c3581eae1378/server.jar server.jar
 
 # Accept eula
 RUN echo "eula=true" > eula.txt
