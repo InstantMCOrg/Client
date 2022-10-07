@@ -49,6 +49,8 @@ func SendCommand(command string) {
 
 func WaitForStop() {
 	cmd.Wait()
+	serverIsUpAndRunning = false
+	log.Println("Minecraft Server stopped")
 }
 
 func WaitUntilServerIsReady() {
