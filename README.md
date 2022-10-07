@@ -1,4 +1,6 @@
 # InstantMinecraft Server
+[![Publish Docker image](https://github.com/InstantMinecraft/Client/actions/workflows/build-images.yaml/badge.svg)](https://github.com/InstantMinecraft/Client/actions/workflows/build-images.yaml)
+
 A standalone container running a minecraft server which is controllable through an http endpoint
 
 ## Setup
