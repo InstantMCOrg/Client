@@ -36,7 +36,7 @@ func StartServer() {
 	if err != nil {
 		log.Fatal("Couldn't start Minecraft Server", err)
 	}
-	log.Println("Started Minecraft Server successfully")
+	log.Println("Started Minecraft Server successfully. Waiting...")
 
 	go readServerOutput(stdout)
 }
