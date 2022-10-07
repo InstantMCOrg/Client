@@ -16,6 +16,10 @@ var stdin io.WriteCloser
 var cmd *exec.Cmd
 var serverStartupLock sync.WaitGroup
 
+const (
+	PORT = 25565
+)
+
 func StartServer() {
 	cmd = exec.Command("java", "-jar", "server.jar")
 	stdout, err := cmd.StdoutPipe()
