@@ -69,8 +69,6 @@ func readServerOutput(pipe io.ReadCloser) {
 func parseMinecraftLog(output []byte) {
 	minecraftLog := string(output)
 
-	log.Println(minecraftLog)
-
 	if strings.Contains(minecraftLog, "Preparing spawn area: ") {
 		spawnAreaPreparingPercent, err := strconv.Atoi(strings.Split(strings.Split(minecraftLog, "area: ")[1], "%")[0])
 		log.Println("Spawning area is currently being prepared at ", spawnAreaPreparingPercent, "%")
