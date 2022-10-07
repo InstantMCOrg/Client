@@ -23,3 +23,21 @@ func start(w http.ResponseWriter, r *http.Request) {
 		server.CreateResponse(w, "Minecraft Server has been started", http.StatusOK)
 	}
 }
+
+func stop(w http.ResponseWriter, r *http.Request) {
+	if !mcserver.IsRunning() {
+		server.CreateResponse(w, "Can't stop an already stopped Minecraft Server", http.StatusConflict)
+		return
+	}
+
+	blocking := r.URL.Query().Get("blocking") == "true"
+
+	mcserver.SendStopCommand()
+
+	if blocking {
+		mcserver.WaitForStop()
+		server.CreateResponse(w, "Minecraft Server has stopped", http.StatusOK)
+	} else {
+		server.CreateResponse(w, "Minecraft Server is stopping", http.StatusOK)
+	}
+}

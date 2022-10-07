@@ -7,5 +7,6 @@ func Register() *mux.Router {
 	r.Use(authMiddleware)
 	r.HandleFunc("/", rootRoute).Methods("GET")
 	r.HandleFunc("/server/start", start).Methods("GET")
+	r.HandleFunc("/server/stop", stop).Methods("GET")
 	return r
 }
