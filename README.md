@@ -3,6 +3,12 @@ A standalone container running a minecraft server which is controllable through 
 
 ## Setup
 
+````bash
+docker pull ghcr.io/instantminecraft/client:latest
+docker run -d --name mcclient -p 25585:25585 ghcr.io/instantminecraft/client:latest
+curl localhost:25585/server/start
+````
+
 ## HTTP Endpoints
 Port: 25585
 
