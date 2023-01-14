@@ -7,8 +7,22 @@ A standalone container running a minecraft server which is controllable through 
 
 ````bash
 docker pull ghcr.io/instantminecraft/client:latest
-docker run -d --name mcclient -p 25585:25585 ghcr.io/instantminecraft/client:latest
-curl localhost:25585/server/start
+docker run -d --name mcclient -e auth='<YOUR_AUTH_KEY>' -p 25585:25585 ghcr.io/instantminecraft/client:latest
+curl --header "auth: <YOUR_AUTH_KEY>" localhost:25585/server/start
+````
+
+Docker compose alternative:
+````yaml
+services:
+  mcserver:
+    image: ghcr.io/instantminecraft/client:latest
+    restart: always
+    ports:
+      - "25585:25585"
+    environment:
+      - auth=<YOUR_AUTH_KEY>
+    volumes:
+      - ~/minecraft-server-world/:/server/world/
 ````
 
 ## HTTP Endpoints
