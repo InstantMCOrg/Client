@@ -1,4 +1,4 @@
-name: Build and publish Minecraft 1.19.2 image
+name: Build and publish Minecraft server image
 
 on:
   workflow_call:
@@ -9,7 +9,7 @@ on:
     
 
 jobs:
-  push_to_registry:
+  build-and-push:
     name: Push Docker image
     runs-on: ubuntu-latest
     steps:
@@ -29,7 +29,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build image with minecraft server version ${{ inputs.mc-server-version }}
+      - name: Build image with Minecraft server version ${{ inputs.mc-server-version }}
         uses: docker/build-push-action@v3
         with:
           push: true

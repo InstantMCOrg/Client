@@ -1,39 +1,13 @@
-name: Publish Docker image
+name: Publish Docker images
 
 on:
   - push
 
 jobs:
   build:
+    strategy:
+      matrix:
+        version: [1.19.2, 1.19]
     uses: ./.github/workflows/build-mc-server.yaml
     with:
       mc-server-version: 1.19.2
-#  setup-env:
-#    uses: ./.github/workflows/setup-docker-env.yaml
-#
-#  build-latest:
-#    name: Build latest Minecraft Server
-#    runs-on: ubuntu-latest
-#    needs: setup-env
-#    steps:
-#      - name: Build image with minecraft server version 1.19.3
-#        uses: docker/build-push-action@v3
-#        with:
-#          push: true
-#          platforms: linux/amd64,linux/arm64
-#          tags: ghcr.io/instantminecraft/client:latest
-#
-#  build-mc-1_19_2:
-#    name: Build Minecraft 1.19.2 server
-#    runs-on: ubuntu-latest
-#    needs: setup-env
-#    steps:
-#      - name: Build image with minecraft server version 1.19.2
-#        uses: docker/build-push-action@v3
-#        with:
-#          push: true
-#          platforms: linux/amd64,linux/arm64
-#          build-args: |
-#            serverfile=https://serverjars.com/api/fetchJar/vanilla/vanilla/1.19.2
-#            minecraftversion=1.19.2
-#          tags: ghcr.io/instantminecraft/client:mc-1.19.2
