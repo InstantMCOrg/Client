@@ -1,4 +1,4 @@
-name: Build and publish 1.19.2 image
+name: Build and publish Minecraft 1.19.2 image
 
 on:
   - push
@@ -29,7 +29,7 @@ jobs:
         with:
           push: true
           platforms: linux/amd64,linux/arm64
-          build-args:
+          build-args: |
             serverfile=https://serverjars.com/api/fetchJar/vanilla/vanilla/1.19.2
             minecraftversion=1.19.2
           tags: ghcr.io/instantminecraft/client:mc-1.19.2
