@@ -4,10 +4,10 @@ on:
   - push
 
 jobs:
-  build:
+  build-docker-image:
     strategy:
       matrix:
         version: [1.19.2, 1.19]
     uses: ./.github/workflows/build-mc-server.yaml
     with:
-      mc-server-version: 1.19.2
+      mc-server-version: ${{ matrix.version }}
