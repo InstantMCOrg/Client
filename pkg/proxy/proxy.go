@@ -59,6 +59,7 @@ func acceptClient(conn net.Conn) {
 		targetPort = server.PORT
 		if pkg.DEBUG {
 			log.Println("Connection appears to be from a http client. Answering...")
+			log.Println("Signature:", signature, "buffer:", buf)
 		}
 	}
 
