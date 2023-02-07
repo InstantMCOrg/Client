@@ -45,6 +45,9 @@ COPY --from=builder /client /client
 # Install Minecraft Server
 ADD ${serverfile} server.jar
 
+# Add Server Icon
+ADD https://avatars.githubusercontent.com/u/114870878?s=64 server-icon.png
+
 # Accept eula
 RUN echo "eula=true" > eula.txt
 
