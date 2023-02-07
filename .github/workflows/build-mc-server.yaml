@@ -2,6 +2,11 @@ name: Build and publish Minecraft 1.19.2 image
 
 on:
   workflow_call:
+    inputs:
+      mc-server-version:
+        required: true
+        type: string
+    
 
 jobs:
   push_to_registry:
@@ -24,12 +29,12 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build image with minecraft server version 1.19.2
+      - name: Build image with minecraft server version ${{ inputs.mc-server-version }}
         uses: docker/build-push-action@v3
         with:
           push: true
           platforms: linux/amd64,linux/arm64
           build-args: |
-            serverfile=https://serverjars.com/api/fetchJar/vanilla/vanilla/1.19.2
-            minecraftversion=1.19.2
-          tags: ghcr.io/instantminecraft/client:mc-1.19.2
+            serverfile=https://serverjars.com/api/fetchJar/vanilla/vanilla/${{ inputs.mc-server-version }}
+            minecraftversion=${{ inputs.mc-server-version }}
+          tags: ghcr.io/instantminecraft/client:mc-${{ inputs.mc-server-version }}
