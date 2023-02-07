@@ -10,6 +10,7 @@ on:
 
 jobs:
   build-and-push:
+    if: ${{ always() }}
     name: Push Docker image
     runs-on: ubuntu-latest
     steps:
