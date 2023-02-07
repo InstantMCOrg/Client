@@ -1,5 +1,8 @@
 name: Setup docker build env
 
+on:
+  workflow_call:
+
 jobs:
   setup:
     name: Prepare building environment

@@ -6,6 +6,18 @@ on:
 jobs:
   setup-env:
     uses: ./.github/workflows/setup-docker-env.yaml
+
+  build-latest:
+    name: Build latest Minecraft Server
+    needs: setup-env
+    steps:
+      - name: Build image with minecraft server version 1.19.3
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: ghcr.io/instantminecraft/client:latest
+
   build-mc-1.19.2:
     name: Build Minecraft 1.19.2 server
     needs: setup-env
