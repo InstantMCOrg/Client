@@ -77,7 +77,7 @@ func parseMinecraftLog(output []byte) {
 
 	if strings.Contains(minecraftLog, "Preparing spawn area: ") {
 		spawnAreaPreparingPercent, err := strconv.Atoi(strings.Split(strings.Split(minecraftLog, "area: ")[1], "%")[0])
-		log.Println("Spawning area is currently being prepared at ", spawnAreaPreparingPercent, "%")
+		log.Println("Spawning area is currently being prepared at", spawnAreaPreparingPercent, "%")
 		isGeneratingWorld = true
 		if err != nil {
 			worldGeneratingStatus = spawnAreaPreparingPercent
