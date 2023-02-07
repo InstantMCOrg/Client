@@ -19,6 +19,10 @@ LABEL org.opencontainers.image.description="A standalone container running a min
 # Default to UTF-8 file.encoding
 ENV LANG C.UTF-8
 
+ARG serverfile=https://piston-data.mojang.com/v1/objects/c9df48efed58511cdd0213c56b9013a7b5c9ac1f/server.jar
+ARG minecraftversion=1.19.3
+ENV minecraftversion=${minecraftversion}
+
 # Update system
 RUN apk update \
   && apk --update-cache upgrade \
@@ -39,7 +43,7 @@ WORKDIR server
 COPY --from=builder /client /client
 
 # Install Minecraft Server
-ADD https://piston-data.mojang.com/v1/objects/f69c284232d7c7580bd89a5a4931c3581eae1378/server.jar server.jar
+ADD ${serverfile} server.jar
 
 # Accept eula
 RUN echo "eula=true" > eula.txt
