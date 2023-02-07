@@ -48,6 +48,7 @@ func acceptClient(conn net.Conn) {
 
 	// select target port
 	var targetPort int
+	log.Println("Signature:", signature, "buffer:", buf)
 	if isMinecraftConnection(signature) {
 		// Proxy connection to minecraft server like nothing happened
 		targetPort = mcserver.PORT
@@ -59,7 +60,6 @@ func acceptClient(conn net.Conn) {
 		targetPort = server.PORT
 		if pkg.DEBUG {
 			log.Println("Connection appears to be from a http client. Answering...")
-			log.Println("Signature:", signature, "buffer:", buf)
 		}
 	}
 
@@ -87,6 +87,6 @@ func acceptClient(conn net.Conn) {
 }
 
 func isMinecraftConnection(signature string) bool {
-	// The first 4 digits area always "1000" if a minecraft client tries to connect
-	return signature == "1000"
+	// The first 4 digits area always "1000" or "1500" if a minecraft client tries to connect
+	return signature == "1000" || signature == "1500"
 }
