@@ -16,8 +16,8 @@ func main() {
 	}
 	routes := router.Register()
 	go server.Handle(routes)
-	proxy.Start()
 	if pkg.BUILD_WORLD_ON_STARTUP {
 		mcserver.StartServer()
 	}
+	proxy.Start()
 }
