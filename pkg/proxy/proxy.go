@@ -3,6 +3,7 @@ package proxy
 import (
 	"encoding/hex"
 	"fmt"
+	"github.com/instantminecraft/client/pkg"
 	"github.com/instantminecraft/client/pkg/mcserver"
 	"github.com/instantminecraft/client/pkg/server"
 	"io"
@@ -26,6 +27,10 @@ func Start() {
 
 	for {
 		if conn, err := l.Accept(); err == nil {
+			if pkg.DEBUG {
+				log.Println("Accepting connection from", conn.RemoteAddr().String(), "...")
+			}
+
 			go acceptClient(conn)
 		}
 	}
@@ -46,9 +51,15 @@ func acceptClient(conn net.Conn) {
 	if isMinecraftConnection(signature) {
 		// Proxy connection to minecraft server like nothing happened
 		targetPort = mcserver.PORT
+		if pkg.DEBUG {
+			log.Println("Connection appears to be from a minecraft client. Redirecting...")
+		}
 	} else {
 		// Proxy connection to local HTTP server
 		targetPort = server.PORT
+		if pkg.DEBUG {
+			log.Println("Connection appears to be from a http client. Answering...")
+		}
 	}
 
 	targetConnection, err := net.Dial("tcp", fmt.Sprintf(":%d", targetPort))
