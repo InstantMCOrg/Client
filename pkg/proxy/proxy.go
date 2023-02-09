@@ -49,7 +49,7 @@ func acceptClient(conn net.Conn) {
 	// select target port
 	var targetPort int
 	log.Println("Signature:", signature, "buffer:", buf, "string:", string(buf))
-	if isMinecraftConnection(signature) {
+	if isMinecraftConnection(string(buf)) {
 		// Proxy connection to minecraft server like nothing happened
 		targetPort = mcserver.PORT
 		if pkg.DEBUG {
@@ -87,7 +87,11 @@ func acceptClient(conn net.Conn) {
 }
 
 func isMinecraftConnection(signature string) bool {
+	// ----DEPRECATED---
 	// The first 4 digits area always "1000" or "1500" if a minecraft client tries to connect
 	// Note: I don't know why, but on local running minecraft servers "1000" is the signature while on deployed servers the signatures seems to be "1500"
-	return signature == "1000" || signature == "1500" || signature == "2600"
+	//return signature == "1000" || signature == "1500" || signature == "2600"
+	// ----DEPRECATED---
+
+	return signature == "GE" || signature == "PO" // GET or POST request
 }
