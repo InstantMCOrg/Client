@@ -9,7 +9,7 @@ import (
 	"sync"
 )
 
-var isGeneratingWorld = true
+var isGeneratingWorld = false
 var worldGeneratingStatus = 0
 var serverIsUpAndRunning = false
 var stdin io.WriteCloser
