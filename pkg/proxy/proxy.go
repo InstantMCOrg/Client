@@ -48,7 +48,7 @@ func acceptClient(conn net.Conn) {
 
 	// select target port
 	var targetPort int
-	log.Println("Signature:", signature, "buffer:", buf)
+	log.Println("Signature:", signature, "buffer:", buf, "string:", string(buf))
 	if isMinecraftConnection(signature) {
 		// Proxy connection to minecraft server like nothing happened
 		targetPort = mcserver.PORT
