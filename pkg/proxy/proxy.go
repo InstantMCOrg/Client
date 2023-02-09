@@ -93,5 +93,5 @@ func isMinecraftConnection(signature string) bool {
 	//return signature == "1000" || signature == "1500" || signature == "2600"
 	// ----DEPRECATED---
 
-	return signature == "GE" || signature == "PO" // GET or POST request
+	return signature != "GE" && signature != "PO" // GET or POST request
 }
