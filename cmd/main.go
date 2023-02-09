@@ -1,13 +1,14 @@
 package main
 
 import (
-	"github.com/instantminecraft/client/pkg"
 	"github.com/instantminecraft/client/pkg/auth"
+	"github.com/instantminecraft/client/pkg/constants"
 	"github.com/instantminecraft/client/pkg/mcserver"
 	"github.com/instantminecraft/client/pkg/proxy"
 	"github.com/instantminecraft/client/pkg/router"
 	"github.com/instantminecraft/client/pkg/server"
 	"log"
+	"os"
 )
 
 func main() {
@@ -16,7 +17,8 @@ func main() {
 	}
 	routes := router.Register()
 	go server.Handle(routes)
-	if pkg.BUILD_WORLD_ON_STARTUP {
+	buildWorld, _ := os.LookupEnv(constants.EnvBuildMcWorldOnBoot)
+	if buildWorld == "true" {
 		mcserver.StartServer()
 	}
 	proxy.Start()
