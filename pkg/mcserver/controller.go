@@ -11,6 +11,7 @@ import (
 
 var isGeneratingWorld = false
 var worldGeneratingStatus = 0
+var WorldGenerationChan = make(chan int)
 var serverIsUpAndRunning = false
 var stdin io.WriteCloser
 var cmd *exec.Cmd
@@ -82,10 +83,12 @@ func parseMinecraftLog(output []byte) {
 		if err != nil {
 			worldGeneratingStatus = spawnAreaPreparingPercent
 		}
+		WorldGenerationChan <- spawnAreaPreparingPercent
 	} else if strings.Contains(minecraftLog, "Done") {
 		isGeneratingWorld = false
 		serverIsUpAndRunning = true
 		log.Println("Minecraft Server is up and running")
+		WorldGenerationChan <- 100
 		serverStartupLock.Done()
 	}
 }
