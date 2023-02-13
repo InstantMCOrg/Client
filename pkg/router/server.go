@@ -1,10 +1,16 @@
 package router
 
 import (
+	"github.com/gorilla/websocket"
 	"github.com/instantminecraft/client/pkg/mcserver"
 	"github.com/instantminecraft/client/pkg/server"
 	"net/http"
 )
+
+var upgrader = websocket.Upgrader{
+	ReadBufferSize:  1024,
+	WriteBufferSize: 1024,
+}
 
 func start(w http.ResponseWriter, r *http.Request) {
 	if mcserver.IsRunning() {
@@ -40,4 +46,27 @@ func stop(w http.ResponseWriter, r *http.Request) {
 	} else {
 		server.CreateResponse(w, "Minecraft Server is stopping", http.StatusOK)
 	}
+}
+
+func creationStatus(w http.ResponseWriter, r *http.Request) {
+	conn, err := upgrader.Upgrade(w, r, nil)
+	if err != nil {
+		server.CreateResponse(w, "Couldn't establish a websocket connection", http.StatusOK)
+		return
+	}
+	if mcserver.IsRunning() {
+		conn.WriteJSON(map[string]interface{}{"status": "already running"})
+		conn.Close()
+		return
+	}
+
+	for {
+		currentGenerationStatus := <-mcserver.WorldGenerationChan
+		conn.WriteJSON(map[string]interface{}{"status": "preparing", "world_status": currentGenerationStatus})
+		if currentGenerationStatus == 100 {
+			break
+		}
+	}
+
+	conn.Close()
 }
