@@ -12,6 +12,7 @@ import (
 var isGeneratingWorld = false
 var worldGeneratingStatus = 0
 var WorldGenerationChan = make(chan int)
+var ServerLogsChan = make(chan string)
 var serverIsUpAndRunning = false
 var stdin io.WriteCloser
 var cmd *exec.Cmd
@@ -75,6 +76,15 @@ func readServerOutput(pipe io.ReadCloser) {
 
 func parseMinecraftLog(output []byte) {
 	minecraftLog := string(output)
+	// this select is need bc we can't guarantee that there is a receiver for the channel
+	select {
+	case ServerLogsChan <- minecraftLog:
+		// A websocket is currently listening on the logs...
+		break
+	default:
+		// No websocket is currently listening
+		break
+	}
 
 	if strings.Contains(minecraftLog, "Preparing spawn area: ") {
 		spawnAreaPreparingPercent, err := strconv.Atoi(strings.Split(strings.Split(minecraftLog, "area: ")[1], "%")[0])

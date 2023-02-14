@@ -70,3 +70,18 @@ func creationStatus(w http.ResponseWriter, r *http.Request) {
 
 	conn.Close()
 }
+
+func serverLogs(w http.ResponseWriter, r *http.Request) {
+	conn, err := upgrader.Upgrade(w, r, nil)
+	if err != nil {
+		server.CreateResponse(w, "Couldn't establish a websocket connection", http.StatusOK)
+		return
+	}
+
+	for {
+		message := <-mcserver.ServerLogsChan
+		conn.WriteMessage(websocket.TextMessage, []byte(message))
+	}
+
+	conn.Close()
+}
