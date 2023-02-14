@@ -83,7 +83,14 @@ func parseMinecraftLog(output []byte) {
 		if err != nil {
 			worldGeneratingStatus = spawnAreaPreparingPercent
 		}
-		WorldGenerationChan <- spawnAreaPreparingPercent
+		select {
+		case WorldGenerationChan <- spawnAreaPreparingPercent:
+			// A websocket is currently listening...
+			break
+		default:
+			// No websocket is currently listening
+			break
+		}
 	} else if strings.Contains(minecraftLog, "Done") {
 		isGeneratingWorld = false
 		serverIsUpAndRunning = true
