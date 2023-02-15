@@ -105,7 +105,14 @@ func parseMinecraftLog(output []byte) {
 		isGeneratingWorld = false
 		serverIsUpAndRunning = true
 		log.Println("Minecraft Server is up and running")
-		WorldGenerationChan <- 100
+		select {
+		case WorldGenerationChan <- 100:
+			// A websocket is currently listening...
+			break
+		default:
+			// No websocket is currently listening
+			break
+		}
 		serverStartupLock.Done()
 	}
 }
