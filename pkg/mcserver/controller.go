@@ -1,6 +1,7 @@
 package mcserver
 
 import (
+	"fmt"
 	"io"
 	"log"
 	"os/exec"
@@ -69,6 +70,7 @@ func readServerOutput(pipe io.ReadCloser) {
 		_, err := pipe.Read(tmp)
 		parseMinecraftLog(tmp)
 		if err != nil {
+			fmt.Print("Minecraft logs pipe unexpectedly closed:", err)
 			break
 		}
 	}
