@@ -33,7 +33,7 @@ RUN apk update \
 RUN apk add --no-cache \
   --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing \
   --repository http://dl-cdn.alpinelinux.org/alpine/edge/main \
-    openjdk18-jre-headless curl
+    openjdk18-jre curl libstdc++
 
 # Create Server directory
 RUN mkdir server
