@@ -68,11 +68,11 @@ func readServerOutput(pipe io.ReadCloser) {
 	for {
 		tmp := make([]byte, 1024)
 		_, err := pipe.Read(tmp)
-		parseMinecraftLog(tmp)
 		if err != nil {
-			fmt.Print("Minecraft logs pipe unexpectedly closed:", err)
+			fmt.Println("Minecraft logs pipe unexpectedly closed:", err)
 			break
 		}
+		parseMinecraftLog(tmp)
 	}
 }
 
