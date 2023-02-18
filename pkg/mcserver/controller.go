@@ -37,6 +37,11 @@ func StartServer() {
 		log.Fatal("Couldn't redirect input", err)
 	}
 
+	errPipe, err := cmd.StderrPipe()
+	if err != nil {
+		log.Fatal("Couldn't connect to the error pipe:", err)
+	}
+
 	serverStartupLock.Add(1)
 	err = cmd.Start()
 
@@ -45,6 +50,7 @@ func StartServer() {
 	}
 	log.Println("Started Minecraft Server successfully. Waiting...")
 
+	go readErrorPipe(errPipe)
 	go readServerOutput(stdout)
 }
 
@@ -64,12 +70,24 @@ func WaitUntilServerIsReady() {
 	serverStartupLock.Wait()
 }
 
+func readErrorPipe(pipe io.ReadCloser) {
+	for {
+		tmp := make([]byte, 1024)
+		_, err := pipe.Read(tmp)
+		if err != nil {
+			fmt.Println("Error logs pipe closed unexpectedly:", err)
+			break
+		}
+		log.Println(string(tmp))
+	}
+}
+
 func readServerOutput(pipe io.ReadCloser) {
 	for {
 		tmp := make([]byte, 1024)
 		_, err := pipe.Read(tmp)
 		if err != nil {
-			fmt.Println("Minecraft logs pipe unexpectedly closed:", err)
+			fmt.Println("Minecraft logs pipe closed unexpectedly:", err)
 			break
 		}
 		parseMinecraftLog(tmp)
