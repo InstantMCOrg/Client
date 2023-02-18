@@ -2,6 +2,7 @@ package mcserver
 
 import (
 	"fmt"
+	"github.com/instantminecraft/client/pkg/constants"
 	"io"
 	"log"
 	"os/exec"
@@ -19,12 +20,18 @@ var stdin io.WriteCloser
 var cmd *exec.Cmd
 var serverStartupLock sync.WaitGroup
 
+var targetRamSize = constants.MinimumRamMb
+
 const (
 	PORT = 25565
 )
 
-func StartServer() {
-	cmd = exec.Command("java", "-jar", "server.jar")
+func StartServer(ram int) {
+	log.Printf("Starting Minecraft Server with %dmb of ram...\n", ram)
+	maximumRamStr := fmt.Sprintf("-Xmx%dm", ram)
+	minAllocRamStr := fmt.Sprintf("-Xms%dm", constants.StartupRamAllocation)
+	targetRamSize = ram
+	cmd = exec.Command("java", maximumRamStr, minAllocRamStr, "-jar", "server.jar")
 	stdout, err := cmd.StdoutPipe()
 
 	if err != nil {
@@ -58,7 +65,7 @@ func StartServer() {
 func crashCatcher() {
 	err := cmd.Wait()
 	log.Println("Minecraft Server unexpectedly exited:", err, "Restarting...")
-	StartServer()
+	StartServer(targetRamSize)
 }
 
 func SendCommand(command string) {

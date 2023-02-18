@@ -18,3 +18,11 @@ func SendStopCommand() {
 func OpPlayer(targetPlayer string) {
 	SendCommand(fmt.Sprintf("/op %s", targetPlayer))
 }
+
+func RamSize() int {
+	return targetRamSize
+}
+
+func SetRamSize(ramSize int) {
+	targetRamSize = ramSize
+}

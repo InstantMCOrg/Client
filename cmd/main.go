@@ -9,6 +9,7 @@ import (
 	"github.com/instantminecraft/client/pkg/server"
 	"log"
 	"os"
+	"strconv"
 )
 
 func main() {
@@ -17,9 +18,21 @@ func main() {
 	}
 	routes := router.Register()
 	go server.Handle(routes)
+	targetRamSizeRaw, ok := os.LookupEnv(constants.EnvTargetRamSize)
+	if ok {
+		targetRamSize, err := strconv.Atoi(targetRamSizeRaw)
+		if err != nil {
+			log.Fatal("Couldn't parse requested ram size:", err)
+		} else if targetRamSize < constants.MinimumRamMb {
+			log.Printf("Requested ram size (%dmb) can't be below minimum ram size (%dmb). Defaulting back to minimum ram size...\n", targetRamSize, constants.MinimumRamMb)
+			targetRamSize = constants.MinimumRamMb
+		}
+		mcserver.SetRamSize(targetRamSize)
+		log.Printf("Requested ram size has been set to %dmb\n", targetRamSize)
+	}
 	buildWorld, _ := os.LookupEnv(constants.EnvBuildMcWorldOnBoot)
 	if buildWorld == "true" {
-		mcserver.StartServer()
+		mcserver.StartServer(mcserver.RamSize()) // using default or env value
 	}
 	proxy.Start()
 }

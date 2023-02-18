@@ -6,6 +6,7 @@ import (
 	"github.com/instantminecraft/client/pkg/server"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 var upgrader = websocket.Upgrader{
@@ -20,8 +21,18 @@ func start(w http.ResponseWriter, r *http.Request) {
 	}
 
 	blocking := r.URL.Query().Get("blocking") == "true"
-
-	mcserver.StartServer()
+	ramMBRaw := r.URL.Query().Get("ram")
+	setRam := ramMBRaw != ""
+	if setRam {
+		ramMB, err := strconv.Atoi(ramMBRaw)
+		if err != nil {
+			server.CreateResponse(w, "Couldn't parse \"ram\" parameter", http.StatusBadRequest)
+			return
+		}
+		mcserver.StartServer(ramMB)
+	} else {
+		mcserver.StartServer(mcserver.RamSize()) // using already used ram size
+	}
 
 	if blocking {
 		mcserver.WaitUntilServerIsReady()
