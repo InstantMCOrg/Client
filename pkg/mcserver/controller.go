@@ -52,6 +52,13 @@ func StartServer() {
 
 	go readErrorPipe(errPipe)
 	go readServerOutput(stdout)
+	go crashCatcher()
+}
+
+func crashCatcher() {
+	err := cmd.Wait()
+	log.Println("Minecraft Server unexpectedly exited:", err, "Restarting...")
+	StartServer()
 }
 
 func SendCommand(command string) {
