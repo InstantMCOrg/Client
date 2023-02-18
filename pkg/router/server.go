@@ -4,6 +4,7 @@ import (
 	"github.com/gorilla/websocket"
 	"github.com/instantminecraft/client/pkg/mcserver"
 	"github.com/instantminecraft/client/pkg/server"
+	"log"
 	"net/http"
 )
 
@@ -62,7 +63,11 @@ func creationStatus(w http.ResponseWriter, r *http.Request) {
 
 	for {
 		currentGenerationStatus := <-mcserver.WorldGenerationChan
-		conn.WriteJSON(map[string]interface{}{"status": "preparing", "world_status": currentGenerationStatus})
+		err := conn.WriteJSON(map[string]interface{}{"status": "preparing", "world_status": currentGenerationStatus})
+		if err != nil {
+			log.Println("An error occurred while sending world generation status:", err)
+			break
+		}
 		if currentGenerationStatus == 100 {
 			break
 		}
