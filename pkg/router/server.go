@@ -1,6 +1,7 @@
 package router
 
 import (
+	"fmt"
 	"github.com/gorilla/websocket"
 	"github.com/instantminecraft/client/pkg/mcserver"
 	"github.com/instantminecraft/client/pkg/server"
@@ -100,4 +101,14 @@ func serverLogs(w http.ResponseWriter, r *http.Request) {
 	}
 
 	conn.Close()
+}
+
+func sendMessage(w http.ResponseWriter, r *http.Request) {
+	message := r.FormValue("message")
+	if message == "" {
+		server.CreateResponse(w, "Please provide \"message\"", http.StatusBadRequest)
+		return
+	}
+	mcserver.SendCommand(fmt.Sprintf("/say %s", message))
+	server.CreateResponse(w, "Success", http.StatusOK)
 }
