@@ -14,7 +14,7 @@ RUN go build -o /client
 
 FROM alpine:3.14
 LABEL maintainer=binozoworks
-LABEL org.opencontainers.image.source = "https://github.com/InstantMinecraft/Client"
+LABEL org.opencontainers.image.source = "https://github.com/InstantMC/Client"
 LABEL org.opencontainers.image.description="A standalone container running a minecraft server which is controllable through an http endpoint"
 # Default to UTF-8 file.encoding
 ENV LANG C.UTF-8

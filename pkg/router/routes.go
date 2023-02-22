@@ -2,7 +2,7 @@ package router
 
 import (
 	"encoding/json"
-	"github.com/instantminecraft/client/pkg/mcserver"
+	"github.com/instantmc/client/pkg/mcserver"
 	"net/http"
 )
 

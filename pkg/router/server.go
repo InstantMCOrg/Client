@@ -3,8 +3,8 @@ package router
 import (
 	"fmt"
 	"github.com/gorilla/websocket"
-	"github.com/instantminecraft/client/pkg/mcserver"
-	"github.com/instantminecraft/client/pkg/server"
+	"github.com/instantmc/client/pkg/mcserver"
+	"github.com/instantmc/client/pkg/server"
 	"log"
 	"net/http"
 	"strconv"

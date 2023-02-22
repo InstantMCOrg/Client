@@ -1,12 +1,12 @@
 package main
 
 import (
-	"github.com/instantminecraft/client/pkg/auth"
-	"github.com/instantminecraft/client/pkg/constants"
-	"github.com/instantminecraft/client/pkg/mcserver"
-	"github.com/instantminecraft/client/pkg/proxy"
-	"github.com/instantminecraft/client/pkg/router"
-	"github.com/instantminecraft/client/pkg/server"
+	"github.com/instantmc/client/pkg/auth"
+	"github.com/instantmc/client/pkg/constants"
+	"github.com/instantmc/client/pkg/mcserver"
+	"github.com/instantmc/client/pkg/proxy"
+	"github.com/instantmc/client/pkg/router"
+	"github.com/instantmc/client/pkg/server"
 	"log"
 	"os"
 	"strconv"

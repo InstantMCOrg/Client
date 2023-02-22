@@ -1,7 +1,7 @@
 package router
 
 import (
-	"github.com/instantminecraft/client/pkg/auth"
+	"github.com/instantmc/client/pkg/auth"
 	"net/http"
 )
 

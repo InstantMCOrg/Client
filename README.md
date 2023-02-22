@@ -1,13 +1,13 @@
-# InstantMinecraft Server
-[![Publish Docker image](https://github.com/InstantMinecraft/Client/actions/workflows/build-images.yaml/badge.svg)](https://github.com/InstantMinecraft/Client/actions/workflows/build-images.yaml)
+# InstantMC Server
+[![Publish Docker image](https://github.com/InstantMC/Client/actions/workflows/build-images.yaml/badge.svg)](https://github.com/InstantMC/Client/actions/workflows/build-images.yaml)
 
 A standalone container running a minecraft server which is controllable through an http endpoint
 
 ## Setup
 
 ````bash
-docker pull ghcr.io/instantminecraft/client:latest
-docker run -d --name mcclient -e auth='<YOUR_AUTH_KEY>' -p 25585:25585 ghcr.io/instantminecraft/client:latest
+docker pull ghcr.io/instantmc/client:latest
+docker run -d --name mcclient -e auth='<YOUR_AUTH_KEY>' -p 25585:25585 ghcr.io/instantmc/client:latest
 curl --header "auth: <YOUR_AUTH_KEY>" localhost:25585/server/start
 ````
 
@@ -15,7 +15,7 @@ Docker compose alternative:
 ````yaml
 services:
   mcserver:
-    image: ghcr.io/instantminecraft/client:latest
+    image: ghcr.io/instantmc/client:latest
     restart: always
     ports:
       - "25585:25585"

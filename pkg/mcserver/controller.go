@@ -2,7 +2,7 @@ package mcserver
 
 import (
 	"fmt"
-	"github.com/instantminecraft/client/pkg/constants"
+	"github.com/instantmc/client/pkg/constants"
 	"io"
 	"log"
 	"os/exec"

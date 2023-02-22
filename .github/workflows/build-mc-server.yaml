@@ -38,4 +38,4 @@ jobs:
           build-args: |
             serverfile=https://serverjars.com/api/fetchJar/vanilla/vanilla/${{ inputs.mc-server-version }}
             minecraftversion=${{ inputs.mc-server-version }}
-          tags: ghcr.io/instantminecraft/client:mc-${{ inputs.mc-server-version }}
+          tags: ghcr.io/instantmc/client:mc-${{ inputs.mc-server-version }}

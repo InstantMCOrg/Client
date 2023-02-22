@@ -1,4 +1,4 @@
-module github.com/instantminecraft/client
+module github.com/instantmc/client
 
 go 1.18
 

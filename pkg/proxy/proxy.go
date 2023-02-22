@@ -3,9 +3,9 @@ package proxy
 import (
 	"encoding/hex"
 	"fmt"
-	"github.com/instantminecraft/client/pkg"
-	"github.com/instantminecraft/client/pkg/mcserver"
-	"github.com/instantminecraft/client/pkg/server"
+	"github.com/instantmc/client/pkg"
+	"github.com/instantmc/client/pkg/mcserver"
+	"github.com/instantmc/client/pkg/server"
 	"io"
 	"log"
 	"net"
